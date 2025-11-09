@@ -91,21 +91,41 @@ export default function Page(){
               {v.deals && v.deals.length>0 && (
                 <div style={{display:'flex', gap:8, overflowX:'auto', marginTop:10, paddingBottom:4}}>
                   {v.deals.map((d, i) => (
-                    <div key={i} style={{minWidth:220, border:'1px solid #e5e7eb', borderRadius:10, padding:8, display:'grid', gridTemplateColumns:'56px 1fr', gap:8}}>
-                      <img src={'/beer/foam-' + ((i%3)+1) + '.jpg'} alt="beer" width={56} height={56} style={{borderRadius:8, objectFit:'cover'}} />
-                      <div>
-                        <div style={{fontWeight:600}}>{d.beer}</div>
-                        <div style={{fontSize:12, color:'#6b7280'}}>{d.style}</div>
-                        <div style={{marginTop:4, fontWeight:700}}>{d.price} kr</div>
-                        <div style={{fontSize:12}}>⭐ {d.rating ?? 0}</div>
-                        {d.verified && <span style={{...UI.tag, marginTop:6, display:'inline-block'}}>Verifierad</span>}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+  <div
+    key={i}
+    style={{
+      minWidth: 220,
+      border: '1px solid #e5e7eb',
+      borderRadius: 10,
+      padding: 8,
+      display: 'grid',
+      gridTemplateColumns: '56px 1fr',
+      gap: 8
+    }}
+  >
+
+    <img
+      src={(d as any).photo_url ?? d.photoUrl ?? '/beer-fallback.png'}
+      alt="beer"
+      width={56}
+      height={56}
+      style={{ borderRadius: 8, objectFit: 'cover' }}
+    />
+
+    <div>
+      <div style={{ fontWeight: 600 }}>{d.beer}</div>
+      <div style={{ fontSize: 12, color: '#6b7280' }}>{d.style}</div>
+      <div style={{ marginTop: 4, fontWeight: 700 }}>{d.price} kr</div>
+      <div style={{ fontSize: 12 }}>⭐ {d.rating ?? 0}</div>
+      {d.verified && (
+        <span style={{ ...UI.tag, marginTop: 6, display: 'inline-block' }}>
+          Verifierad
+        </span>
+      )}
+    </div>
+
+  </div>
+))}
           {!filtered.length && !loading && <div style={{opacity:.7}}>Inga fynd ännu. Gör första loggen!</div>}
         </div>
 
