@@ -2,7 +2,17 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 
-type Deal = { beer:string; style:string; price:number; rating:number; updatedAt?:string; verified?:boolean; photoUrl?:string|null };
+type Deal = {
+  beer: string;
+  style: string;
+  price: number;
+  rating: number;
+  updatedAt?: string;
+  verified?: boolean;
+  photoUrl?: string | null;   // camelCase (klient)
+  photo_url?: string | null;  // snake_case (API)
+};
+
 type Venue = { id:string; name:string; city:string; address?:string|null; lat?:number|null; lng?:number|null; open_now?:boolean; deals?:Deal[] };
 
 const UI = {
