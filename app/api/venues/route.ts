@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
   const { data, error } = await supabase
     .from('venues')
-    .select('id,name,city,address,lat,lng,open_now')
+    .select('id,name,city,address')
     .eq('city', city)
     .order('name', { ascending: true });
 

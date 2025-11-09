@@ -12,14 +12,12 @@ export async function GET(req: Request) {
 
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
-  // 1) venues
   let vq = supabase.from('venues').select('id,name,city,address,open_now');
   if (city) vq = vq.eq('city', city);
-  const vres = await vq;
+  const vres = await vq.order('name', { ascending: true });
   if (vres.error) return NextResponse.json({ error: vres.error.message }, { status: 500 });
   const venues = (vres.data || []) as VenueRow[];
 
-  // 2) prices + beers
   const pres = await supabase.from('prices').select('venue_id, price_sek, rating, created_at, beer_id');
   if (pres.error) return NextResponse.json({ error: pres.error.message }, { status: 500 });
   const bres = await supabase.from('beers').select('id,name,style');
@@ -42,8 +40,6 @@ export async function GET(req: Request) {
       const bp = b.deals?.length ? Math.min(...b.deals.map((d:any)=>d.price)) : Number.POSITIVE_INFINITY;
       return ap - bp;
     });
-  } else {
-    rows.sort((a:any,b:any)=> (b.open_now?1:0) - (a.open_now?1:0));
   }
 
   return NextResponse.json(rows);
