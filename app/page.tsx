@@ -109,6 +109,7 @@ export default function Page(){
       alt="beer"
       width={56}
       height={56}
+      loading="lazy"
       style={{ borderRadius: 8, objectFit: 'cover' }}
     />
 
